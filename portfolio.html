@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Martin Olsson - Portfolio</title>
+  <link rel="stylesheet" href="styles/styles.css" />
+</head>
+
+<body>
+  <div class="cursor" aria-hidden="true"></div>
+  <main class="content">
+    <header class="page-header">
+      <h1>Selected Work</h1>
+      <div class="theme-switcher"></div>
+    </header>
+
+    <p>
+      I'm both a designer and developer: hands-on from concept, through design and product, to front-end and
+      backend code, deployment and maintenance. I take pride understanding the problem space and user needs,
+      digging deep into the domain and applying a light and simple touch, avoiding unnecessary complexity
+      and over-engineering.
+    </p>
+
+    <section class="work-grid" aria-label="Portfolio projects">
+      <article>
+        <header>
+          <h2>Candela Ops Console</h2>
+          <p>Product design, fleet visibility, and onboard UX</p>
+        </header>
+        <div class="work-media slideshow">
+          <div class="slideshow-viewport">
+            <figure id="dashboard-overview">
+              <img src="https://placehold.co/1200x900/png" alt="" />
+              <figcaption>Dashboard overview showing key metrics</figcaption>
+            </figure>
+            <figure id="fleet-tracking">
+              <img src="https://placehold.co/1200x900/png" alt="" />
+              <figcaption>Real-time fleet tracking interface</figcaption>
+            </figure>
+            <figure id="onboard-panel">
+              <img src="https://placehold.co/1200x900/png" alt="" />
+              <figcaption>Onboard control panel design</figcaption>
+            </figure>
+          </div>
+          <nav aria-label="Slideshow navigation">
+            <a href="#dashboard-overview" aria-label="Dashboard overview"></a>
+            <a href="#fleet-tracking" aria-label="Fleet tracking"></a>
+            <a href="#onboard-panel" aria-label="Onboard panel"></a>
+          </nav>
+        </div>
+      </article>
+
+      <article>
+        <header>
+          <h2>Interface Walk-through</h2>
+          <p>System behavior, edge cases, and calm state transitions</p>
+        </header>
+        <div class="work-media">
+          <iframe src="https://player.vimeo.com/video/123456789" title="Placeholder video for interface walk-through"
+            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </article>
+
+      <article>
+        <header>
+          <h2>Health Platform</h2>
+          <p>Patient flows, data clarity, and clinician dashboards</p>
+        </header>
+        <div class="work-media">
+          <img src="https://placehold.co/1200x900/png" alt="Placeholder for mobile app screens" />
+        </div>
+      </article>
+
+      <article>
+        <header>
+          <h2>Inovia Insight (2017)</h2>
+          <p>Customizable React dashboard for Big Data visualization</p>
+        </header>
+        <div class="work-media">
+          <img src="media/inovia_insight_2017.png" alt="Inovia Insight" />
+        </div>
+        <p>
+          Built for telecom and energy industries to help discover trends in large
+          datasets. I designed and developed the frontend.
+        </p>
+        <p>
+          <em>Tools:</em> React, Redux, NPM, Webpack, Material Design, Karma, Docker
+        </p>
+      </article>
+
+      <article>
+        <header>
+          <h2>Svea Bank Merchant Tools (2015)</h2>
+          <p>Suite of web-based tools for payment processing</p>
+        </header>
+        <div class="work-media">
+          <img src="media/svea_webpay_merchant_tools.png" alt="Svea Bank Merchant Tools" />
+        </div>
+        <p>
+          Merchants use these tools to manage their payment processing and
+          orders. I designed and built the frontend.
+        </p>
+        <p><em>Tools:</em> Aurelia, .NET</p>
+      </article>
+    </section>
+
+
+    <nav aria-label="Main navigation">
+      <a href="index.html">&larr; Back</a>
+    </nav>
+
+  </main>
+
+  <script src="scripts/theme.js"></script>
+  <script src="scripts/slideshow.js"></script>
+  <script src="scripts/main.js"></script>
+
+</body>
+
+</html>
