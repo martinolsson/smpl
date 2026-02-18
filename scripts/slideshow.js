@@ -1,155 +1,95 @@
 class Slideshow {
-  static SWIPE_THRESHOLD = 50;
-  static WHEEL_THRESHOLD = 10;
-  static WHEEL_DEBOUNCE = 600;
-
-  constructor(element) {
-    this.element = element;
-    this.viewport = element.querySelector(".slideshow-viewport");
-    this.slides = element.querySelectorAll(".slideshow-viewport > figure");
-    this.dots = element.querySelectorAll("nav > a");
-    this.currentIndex = 0;
-    this.touchStart = 0;
-    this.wheelDebounce = null;
-
-    if (this.slides.length > 1) this.init();
+  constructor(root) {
+    this.root = root;
+    this.viewport = root.querySelector(".slideshow-viewport");
+    this.slides = Array.from(this.viewport.children);
+    this.dots = [];
   }
 
   init() {
-    this.transitionDuration = this.getTransitionDuration();
-    this.setupInitialState();
-    this.addEventListeners();
+    this.createDotNavigation();
+    this.viewport.addEventListener("click", this.onViewportClick);
+    this.viewport.addEventListener("scroll", this.updateActiveDot);
+    this.viewport.addEventListener("scroll", this.updateHeight);
+    window.addEventListener("resize", this.updateHeight);
+    this.updateHeight();
   }
 
-  getTransitionDuration() {
-    const duration = getComputedStyle(this.slides[0]).transitionDuration;
-    return parseInt(duration.replace("s", "")) * 1000 || 500;
-  }
-
-  setupInitialState() {
-    const hash = window.location.hash.substring(1);
-    const activeIndex = hash
-      ? Array.from(this.slides).findIndex((s) => s.id === hash)
-      : -1;
-
-    this.currentIndex = activeIndex >= 0 ? activeIndex : 0;
-
-    this.slides.forEach((slide, i) => {
-      slide.style.transition = "none";
-      slide.style.transform = i === this.currentIndex
-        ? "translateX(0)"
-        : "translateX(100%)";
-      if (i === this.currentIndex) slide.classList.add("active");
-    });
-
-    this.dots[this.currentIndex].classList.add("active");
-  }
-
-  addEventListeners() {
-    this.dots.forEach((dot, i) => {
-      dot.addEventListener("click", (e) => {
-        e.preventDefault();
-        this.goToSlide(i, i > this.currentIndex ? "next" : "prev");
+  createDotNavigation() {
+    const nav = document.createElement("nav");
+    nav.setAttribute("aria-label", "Slideshow navigation");
+    this.dots = this.slides.map((slide, i) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "dot";
+      dot.addEventListener("click", () => {
+        slide.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "start",
+        });
       });
+      nav.appendChild(dot);
+      return dot;
     });
-
-    this.viewport.style.cursor = "pointer";
-    this.viewport.addEventListener("click", (e) => {
-      const { left, width } = this.viewport.getBoundingClientRect();
-      (e.clientX - left < width / 2) ? this.prevSlide() : this.nextSlide();
-    });
-
-    this.viewport.addEventListener("touchstart", (e) => {
-      this.touchStart = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    this.viewport.addEventListener("touchend", (e) => {
-      const diff = this.touchStart - e.changedTouches[0].screenX;
-      if (Math.abs(diff) > Slideshow.SWIPE_THRESHOLD) {
-        diff > 0 ? this.nextSlide() : this.prevSlide();
-      }
-    }, { passive: true });
-
-    this.viewport.addEventListener("wheel", (e) => {
-      if (Math.abs(e.deltaX) > 0) e.preventDefault();
-
-      const isHorizontalSwipe = Math.abs(e.deltaX) > Math.abs(e.deltaY) &&
-        Math.abs(e.deltaX) > Slideshow.WHEEL_THRESHOLD;
-
-      if (isHorizontalSwipe && !this.wheelDebounce) {
-        e.deltaX > 0 ? this.nextSlide() : this.prevSlide();
-        this.wheelDebounce = setTimeout(
-          () => this.wheelDebounce = null,
-          Slideshow.WHEEL_DEBOUNCE,
-        );
-      }
-    }, { passive: false });
+    if (this.dots && this.dots.length) this.dots[0].classList.add("active");
+    this.root.appendChild(nav);
   }
 
-  goToSlide(index, direction = "next") {
-    if (index === this.currentIndex) return;
-
-    const prevSlide = this.slides[this.currentIndex];
-    const nextSlide = this.slides[index];
-
-    this.updateActiveState(index);
-    this.animateTransition(prevSlide, nextSlide, direction);
-    this.scheduleCleanup();
-  }
-
-  updateActiveState(index) {
-    this.dots[this.currentIndex].classList.remove("active");
-    this.dots[index].classList.add("active");
-    this.currentIndex = index;
-
-    if (this.slides[index].id) {
-      history.replaceState(null, "", `#${this.slides[index].id}`);
+  onViewportClick = (e) => {
+    const rect = this.viewport.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const index = this.getCurrentSlideIndex();
+    if (clickX < rect.width / 2 && index > 0) {
+      this.scrollToSlide(index - 1);
+    } else if (clickX >= rect.width / 2 && index < this.slides.length - 1) {
+      this.scrollToSlide(index + 1);
     }
+  };
+
+  getCurrentSlideIndex() {
+    if (!this.slides.length) return 0;
+    const slideWidth = this.slides[0].offsetWidth;
+    return slideWidth ? Math.round(this.viewport.scrollLeft / slideWidth) : 0;
   }
 
-  animateTransition(prevSlide, nextSlide, direction) {
-    const exitTransform = direction === "next"
-      ? "translateX(-100%)"
-      : "translateX(100%)";
-    const enterTransform = direction === "next"
-      ? "translateX(100%)"
-      : "translateX(-100%)";
-
-    nextSlide.style.transition = "none";
-    nextSlide.style.transform = enterTransform;
-    nextSlide.offsetHeight;
-    nextSlide.style.transition = "";
-    prevSlide.style.transition = "";
-
-    requestAnimationFrame(() => {
-      nextSlide.style.transform = "translateX(0)";
-      nextSlide.classList.add("active");
-      prevSlide.classList.remove("active");
-      prevSlide.style.transform = exitTransform;
+  scrollToSlide(index) {
+    if (index < 0 || index >= this.slides.length) return;
+    this.slides[index].scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "start",
     });
   }
 
-  scheduleCleanup() {
-    setTimeout(() => {
-      this.slides.forEach((slide, i) => {
-        if (i !== this.currentIndex) {
-          slide.style.transition = "none";
-          slide.style.transform = "translateX(100%)";
-          slide.offsetHeight;
-          slide.style.transition = "";
-        }
+  updateActiveDot = () => {
+    if (!this.dots.length) return;
+    const index = this.getCurrentSlideIndex();
+    this.dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
+  };
+
+  updateHeight = () => {
+    const index = this.getCurrentSlideIndex();
+    const slide = this.slides[index];
+
+    if (!slide) return;
+    let content = slide.querySelector("img, video") || slide;
+    let height = content.offsetHeight;
+    if (content.tagName === "IMG" && !content.complete) {
+      content.addEventListener("load", this.updateHeight, { once: true });
+    } else if (content.tagName === "VIDEO" && content.readyState < 1) {
+      content.addEventListener("loadedmetadata", this.updateHeight, {
+        once: true,
       });
-    }, this.transitionDuration);
-  }
-
-  nextSlide() {
-    this.goToSlide((this.currentIndex + 1) % this.slides.length, "next");
-  }
-
-  prevSlide() {
-    this.goToSlide(
-      (this.currentIndex - 1 + this.slides.length) % this.slides.length,
-      "prev",
-    );
-  }
+    }
+    if (height > 0) {
+      this.viewport.style.height = height + "px";
+    }
+  };
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".slideshow").forEach((el) =>
+    new Slideshow(el).init()
+  );
+});

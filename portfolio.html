@@ -2,75 +2,159 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Martin Olsson - Portfolio</title>
-  <link rel="stylesheet" href="styles/styles.css" />
+  <link rel="preload" href="fonts/bitter.woff2" as="font" type="font/woff2" crossorigin>
+  <script>
+    const theme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+  <link rel="stylesheet" href="styles/styles.css">
 </head>
 
 <body>
   <div class="cursor" aria-hidden="true"></div>
   <main class="content">
-    <header class="page-header">
+    <header class="page-header" id="portfolio-top">
       <h1>Selected Work</h1>
       <div class="theme-switcher"></div>
     </header>
 
     <p>
-      I'm both a designer and developer: hands-on from concept, through design and product, to front-end and
-      backend code, deployment and maintenance. I take pride understanding the problem space and user needs,
-      digging deep into the domain and applying a light and simple touch, avoiding unnecessary complexity
-      and over-engineering.
+      I work with design in the intersection between humans and technology: leading teams, shaping product and
+      architecture, writing code and copy, shipping software. I learn problem domains deeply and keep things simple
+      where others might over-engineer and over-design.
     </p>
 
     <section class="work-grid" aria-label="Portfolio projects">
       <article>
         <header>
-          <h2>Candela Ops Console</h2>
-          <p>Product design, fleet visibility, and onboard UX</p>
+          <h2>Candela P-12 Helm Station (2026)</h2>
+          <p>Radical simplicity for a complex vehicle</p>
         </header>
         <div class="work-media slideshow">
           <div class="slideshow-viewport">
-            <figure id="dashboard-overview">
-              <img src="https://placehold.co/1200x900/png" alt="" />
-              <figcaption>Dashboard overview showing key metrics</figcaption>
+            <figure>
+              <video src="media/p-12_ui.webm" autoplay muted loop playsinline></video>
+              <figcaption>UI demonstration</figcaption>
             </figure>
-            <figure id="fleet-tracking">
-              <img src="https://placehold.co/1200x900/png" alt="" />
-              <figcaption>Real-time fleet tracking interface</figcaption>
+            <figure>
+              <video src="media/p-12_ui_in_use.webm" autoplay muted loop playsinline></video>
+              <figcaption>UI in use</figcaption>
             </figure>
-            <figure id="onboard-panel">
-              <img src="https://placehold.co/1200x900/png" alt="" />
-              <figcaption>Onboard control panel design</figcaption>
+            <figure>
+              <img src="media/p-12_ui_controls.png" alt="HVAC controls">
+              <figcaption>HVAC controls</figcaption>
             </figure>
           </div>
-          <nav aria-label="Slideshow navigation">
-            <a href="#dashboard-overview" aria-label="Dashboard overview"></a>
-            <a href="#fleet-tracking" aria-label="Fleet tracking"></a>
-            <a href="#onboard-panel" aria-label="Onboard panel"></a>
-          </nav>
         </div>
+        <p>
+          The P-12 is an electric hydrofoiling ferry that flies above the water at 30 knots. A completely new
+          kind of vessel—quiet, efficient, and controlled by computer systems.
+        </p>
+        <p>
+          I designed and built the driver interface using Flutter with real-time MQTT data, making it
+          intuitive for captains trained on traditional boats—instant clarity on flight status,
+          systems health, and alerts without cognitive overload.
+        </p>
       </article>
 
       <article>
         <header>
-          <h2>Interface Walk-through</h2>
-          <p>System behavior, edge cases, and calm state transitions</p>
+          <h2>Candela Fleet Observability (2025)</h2>
+          <p>Infrastructure and visualisation of fleet data</p>
         </header>
-        <div class="work-media">
-          <iframe src="https://player.vimeo.com/video/123456789" title="Placeholder video for interface walk-through"
-            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        <div class="work-media slideshow">
+          <div class="slideshow-viewport">
+            <figure>
+              <img src="media/candela-overview.png" alt="Fleet overview dashboard">
+              <figcaption>Fleet overview dashboard</figcaption>
+            </figure>
+            <figure>
+              <img src="media/candela-trips.png" alt="Vessel trip view">
+              <figcaption>Vessel trip view</figcaption>
+            </figure>
+            <figure>
+              <img src="media/candela-details.png" alt="Vessel detail view">
+              <figcaption>Vessel detail view</figcaption>
+            </figure>
+            <figure>
+              <img src="media/golden-grot.jpeg" alt="Golden Grot award">
+              <figcaption>Grafana Golden Grot finalist</figcaption>
+            </figure>
+          </div>
         </div>
+        <p>
+          I led work on fleet observability—streaming telemetry from thousands of sensors over 4G to timeseries and
+          logging databases, visualising it with Grafana. Used during development, testing, and daily operations to
+          track performance, diagnose issues, and monitor the growing fleet. Selected as a "Grafana Golden Grot" award
+          finalist among thousands of submissions.
+        </p>
       </article>
 
       <article>
         <header>
-          <h2>Health Platform</h2>
-          <p>Patient flows, data clarity, and clinician dashboards</p>
+          <h2>Candela C-8 Mobile App (2023)</h2>
+          <p>Premium app for a premium boat</p>
         </header>
-        <div class="work-media">
-          <img src="https://placehold.co/1200x900/png" alt="Placeholder for mobile app screens" />
+        <div class="work-media slideshow mobile-screenshots">
+          <div class="slideshow-viewport">
+            <figure id="owner-login">
+              <img src="media/owner-login.png" alt="">
+            </figure>
+            <figure id="owner-boat">
+              <img src="media/owner-boat.png" alt="">
+            </figure>
+            <figure id="owner-track">
+              <img src="media/owner-track.png" alt="">
+            </figure>
+            <figure id="owner-trip">
+              <img src="media/owner-trip.png" alt="">
+            </figure>
+            <figure id="owner-help">
+              <img src="media/owner-help.png" alt="">
+            </figure>
+          </div>
         </div>
+        <p>
+          The Candela C-8 is an electric hydrofoiling day boat for private owners. The mobile app provides
+          remote control, trip statistics, and support.
+        </p>
+        <p>
+          In collaboration with Stendahls I designed and built the app using Flutter, with a Python/Flask backend. I
+          also created a multi-language documentation site for owners.
+        </p>
+      </article>
+
+      <article>
+        <header>
+          <h2>Nectarine Health Wristband & App (2021)</h2>
+        </header>
+        <div class="work-media slideshow mobile-screenshots">
+          <div class="slideshow-viewport">
+            <figure id="nectarine1">
+              <img src="media/necatrine1.jpg" alt="">
+            </figure>
+            <figure id="nectarine2">
+              <img src="media/nectarine2.jpg" alt="">
+            </figure>
+            <figure id="nectarine3">
+              <img src="media/nectarine3.png" alt="">
+            </figure>
+            <figure id="nectarine4">
+              <img src="media/nectarine4.png" alt="">
+            </figure>
+          </div>
+        </div>
+        <p>
+          At Nectarine Health we built a wristband that detects falls and alerts caregivers during emergencies or when
+          unusual patterns occur.
+        </p>
+        <p>
+          I led development of mobile apps for nursing homes and family caregivers, working with UX designers, AI
+          engineers, hardware specialists, and customers. Built with Flutter and Go.
+        </p>
       </article>
 
       <article>
@@ -79,30 +163,89 @@
           <p>Customizable React dashboard for Big Data visualization</p>
         </header>
         <div class="work-media">
-          <img src="media/inovia_insight_2017.png" alt="Inovia Insight" />
+          <img src="media/inovia_insight_2017.png" alt="Inovia Insight">
         </div>
         <p>
-          Built for telecom and energy industries to help discover trends in large
-          datasets. I designed and developed the frontend.
+          Built for telecom and energy industries to help discover trends in large datasets. I designed and developed
+          the tools based on Material Design principles, and experience in information visualisation, using React.
         </p>
+      </article>
+
+
+      <article>
+        <header>
+          <h2>Svea Bank Merchant Tools (2015)</h2>
+          <p>Suite of e-commerce tools</p>
+        </header>
+        <div class="work-media slideshow">
+          <div class="slideshow-viewport">
+            <figure id="admin">
+              <img src="media/svea-admin.png" alt="Svea Bank Merchant Tools">
+              <figcaption>Order admin interface for merchants</figcaption>
+            </figure>
+            <figure id="checkout">
+              <img src="media/svea-checkout.png" alt="Svea Bank Checkout">
+              <figcaption>Checkout interface for web shops</figcaption>
+            </figure>
+          </div>
+        </div>
         <p>
-          <em>Tools:</em> React, Redux, NPM, Webpack, Material Design, Karma, Docker
+          Tools for online merchants to handle checkout, payments, and orders. I designed and built the frontend using
+          Bootstrap, Angular, and Aurelia with a .NET backend. My work on an accessible and convenient checkout flow, as
+          well as modern tools for merchants, gave Svea Bank a competitive edge in the market.
         </p>
       </article>
 
       <article>
         <header>
-          <h2>Svea Bank Merchant Tools (2015)</h2>
-          <p>Suite of web-based tools for payment processing</p>
+          <h2>Unikum (2014)</h2>
+          <p>A modern school portal</p>
         </header>
-        <div class="work-media">
-          <img src="media/svea_webpay_merchant_tools.png" alt="Svea Bank Merchant Tools" />
+        <div class="work-media slideshow">
+          <div class="slideshow-viewport">
+            <figure id="bank">
+              <img src="media/unikum-skolbanken.png" alt="Skolbanken">
+              <figcaption>"Skolbanken" - an open resource for lesson plans</figcaption>
+            </figure>
+            <figure id="eval">
+              <img src="media/unikum-bedomning.png" alt="Unikum evaluations">
+              <figcaption>Assessment support and statistics</figcaption>
+            </figure>
+            <figure id="matrix">
+              <img src="media/unikum-matris.png" alt="Unikum matrix interface">
+              <figcaption>Assessment rubrics for fair evaluation</figcaption>
+            </figure>
+          </div>
         </div>
         <p>
-          Merchants use these tools to manage their payment processing and
-          orders. I designed and built the frontend.
+          Unikum helps schools and students plan and perform education. It was the first SaaS school portal in Sweden
+          and I was the first employee, envisioning, architecting, designing and building a new type of individualised
+          tool for learning.
         </p>
-        <p><em>Tools:</em> Aurelia, .NET</p>
+      </article>
+
+      <article>
+        <header>
+          <h2>Levande Böcker (1995)</h2>
+          <p>Edutainment revolution</p>
+        </header>
+        <div class="work-media slideshow">
+          <div class="slideshow-viewport">
+            <figure id="mulle">
+              <img src="media/bygg-batar.jpg" alt="">
+            </figure>
+            <figure id="minsting">
+              <img src="media/minsting.png" alt="">
+            </figure>
+            <figure id="manniskan">
+              <img src="media/manniskan.png" alt="">
+            </figure>
+          </div>
+        </div>
+        <p>
+          I led localization efforts at Levande Böcker, bringing educational CD-ROM games like Mulle Meck, Lek&Lär, and
+          Äventyret Människan to children in the Nordics.
+        </p>
       </article>
     </section>
 

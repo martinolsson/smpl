@@ -2,10 +2,15 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Martin Olsson</title>
-  <link rel="stylesheet" href="styles/styles.css" />
+  <link rel="preload" href="fonts/bitter.woff2" as="font" type="font/woff2" crossorigin>
+  <script>
+    const theme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+  <link rel="stylesheet" href="styles/styles.css">
 </head>
 
 <body>
@@ -42,11 +47,11 @@
     </p>
 
     <nav aria-label="Main navigation">
+      <a href="media/Martin-Olsson-Resume.pdf">CV</a>
+      <a href="portfolio.html#portfolio-top">Portfolio</a>
       <a href="https://linkedin.com/in/martinolsson">LinkedIn</a>
       <a href="https://github.com/martinolsson">GitHub</a>
-      <a href="Martin-Olsson-Resume.pdf">CV</a>
       <a href="mailto:martin@smpl.se">Email</a>
-      <!-- <a href="portfolio.html">Portfolio</a> -->
     </nav>
   </main>
 
